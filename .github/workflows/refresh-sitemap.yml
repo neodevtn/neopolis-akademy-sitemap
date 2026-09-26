@@ -24,6 +24,7 @@ jobs:
         run: |
           import pathlib
           import urllib.request
+          import urllib.parse
           import xml.etree.ElementTree as ET
 
           ORIGIN = "https://akademy.neodev.click"

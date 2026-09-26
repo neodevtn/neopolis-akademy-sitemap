@@ -2,7 +2,7 @@
 
 This public repository serves a plain-text sitemap for the canonical public pages of [Neopolis Akademy](https://akademy.neodev.click/).
 
-- Public sitemap: `https://neodevtn.github.io/neopolis-akademy-sitemap/sitemap.txt`
+- Public sitemap: `https://raw.githubusercontent.com/neodevtn/neopolis-akademy-sitemap/main/sitemap.txt`
 - Source: `https://akademy.neodev.click/sitemap-index.xml`
 - Format: UTF-8, one fully qualified canonical URL per line
 - Scope: public indexable pages only; authenticated training, administration, account, API, search-query, and assessment routes are rejected
