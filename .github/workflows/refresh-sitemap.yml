@@ -7,49 +7,106 @@ on:
 
 permissions:
   contents: write
+  issues: write
 
 concurrency:
   group: refresh-public-sitemap
-  cancel-in-progress: true
+  cancel-in-progress: false
 
 jobs:
   refresh:
     runs-on: ubuntu-latest
-    timeout-minutes: 10
+    timeout-minutes: 15
     steps:
-      - uses: actions/checkout@v5
+      - uses: actions/checkout@fbc6f3992d24b796d5a048ff273f7fcc4a7b6c09 # v5
 
       - name: Fetch and validate canonical public URLs
         shell: python
         run: |
+          import datetime
+          import hashlib
+          import json
           import pathlib
-          import urllib.request
+          import time
+          import urllib.error
           import urllib.parse
+          import urllib.request
           import xml.etree.ElementTree as ET
 
           ORIGIN = "https://akademy.neodev.click"
           INDEX_URL = f"{ORIGIN}/sitemap-index.xml"
           USER_AGENT = "Mozilla/5.0 (compatible; NeopolisSitemapMirror/1.0; +https://akademy.neodev.click/)"
-          PRIVATE_PREFIXES = (
-              "/admin", "/api", "/training", "/mock-exam", "/account",
-              "/settings", "/login", "/demo-login", "/accept-invitation",
-              "/forgot-password", "/reset-password", "/apply", "/diagnostic",
-          )
           NS = {"sm": "http://www.sitemaps.org/schemas/sitemap/0.9"}
 
-          def fetch(url: str) -> bytes:
-              request = urllib.request.Request(
-                  url,
-                  headers={
-                      "User-Agent": USER_AGENT,
-                      "Accept": "application/xml,text/xml;q=0.9,*/*;q=0.1",
-                      "Accept-Encoding": "identity",
-                  },
-              )
-              with urllib.request.urlopen(request, timeout=45) as response:
-                  if response.status != 200:
-                      raise RuntimeError(f"{url} returned HTTP {response.status}")
-                  return response.read()
+          PUBLIC_EXACT_PATHS = {
+              "/",
+              "/en",
+              "/ar",
+              "/ai-news",
+              "/refer",
+              "/mentions-legales",
+              "/formations-ia",
+              "/formations-ia/catalogue",
+              "/formations-ia/golden-jobs",
+              "/en/ai-training",
+              "/en/ai-training/catalogue",
+              "/en/ai-training/golden-jobs",
+              "/ar/ai-training",
+              "/ar/ai-training/catalogue",
+              "/ar/ai-training/golden-jobs",
+          }
+          PUBLIC_DOMAIN_SLUGS = {
+              "comptabilite-finance",
+              "informatique-developpement",
+              "data-bi-recherche",
+              "administratif-ressources-humaines",
+              "commerce-marketing-relation-client",
+              "juridique-conformite",
+              "strategie-transformation-ia",
+          }
+          PUBLIC_PREFIXES = (
+              "/formations-ia/catalogue/",
+              "/formations-ia/golden-jobs/",
+              "/en/ai-training/catalogue/",
+              "/en/ai-training/golden-jobs/",
+              "/ar/ai-training/catalogue/",
+              "/ar/ai-training/golden-jobs/",
+          )
+
+          def is_public_path(path: str) -> bool:
+              if path in PUBLIC_EXACT_PATHS:
+                  return True
+              if path.startswith(PUBLIC_PREFIXES):
+                  return True
+              for base in ("/formations-ia/", "/en/ai-training/", "/ar/ai-training/"):
+                  if path.startswith(base) and path.removeprefix(base) in PUBLIC_DOMAIN_SLUGS:
+                      return True
+              return False
+
+          def fetch(url: str, attempts: int = 4) -> bytes:
+              last_error = None
+              for attempt in range(1, attempts + 1):
+                  try:
+                      request = urllib.request.Request(
+                          url,
+                          headers={
+                              "User-Agent": USER_AGENT,
+                              "Accept": "application/xml,text/xml;q=0.9,*/*;q=0.1",
+                              "Accept-Encoding": "identity",
+                          },
+                      )
+                      with urllib.request.urlopen(request, timeout=45) as response:
+                          if response.status != 200:
+                              raise RuntimeError(f"{url} returned HTTP {response.status}")
+                          return response.read()
+                  except (OSError, RuntimeError, urllib.error.URLError) as error:
+                      last_error = error
+                      if attempt == attempts:
+                          break
+                      delay = 2 ** (attempt - 1)
+                      print(f"Attempt {attempt}/{attempts} failed for {url}: {error}; retrying in {delay}s")
+                      time.sleep(delay)
+              raise RuntimeError(f"Unable to fetch {url} after {attempts} attempts: {last_error}")
 
           index = ET.fromstring(fetch(INDEX_URL))
           sitemap_urls = [node.text.strip() for node in index.findall("sm:sitemap/sm:loc", NS) if node.text]
@@ -74,20 +131,56 @@ jobs:
                   raise RuntimeError(f"Non-canonical URL: {url}")
               if parsed.query or parsed.fragment:
                   raise RuntimeError(f"URL with query or fragment: {url}")
-              if any(parsed.path == prefix or parsed.path.startswith(f"{prefix}/") for prefix in PRIVATE_PREFIXES):
-                  raise RuntimeError(f"Private URL in sitemap: {url}")
+              if not is_public_path(parsed.path):
+                  raise RuntimeError(f"URL outside the public route allowlist: {url}")
 
-          pathlib.Path("sitemap.txt").write_text("\n".join(urls) + "\n", encoding="utf-8")
+          sitemap_text = "\n".join(urls) + "\n"
+          pathlib.Path("sitemap.txt").write_text(sitemap_text, encoding="utf-8")
+          pathlib.Path("status.json").write_text(
+              json.dumps(
+                  {
+                      "generatedAt": datetime.datetime.now(datetime.timezone.utc).isoformat(),
+                      "source": INDEX_URL,
+                      "sitemapFiles": len(sitemap_urls),
+                      "urlCount": len(urls),
+                      "sha256": hashlib.sha256(sitemap_text.encode("utf-8")).hexdigest(),
+                  },
+                  indent=2,
+              )
+              + "\n",
+              encoding="utf-8",
+          )
           print(f"Validated {len(urls)} unique canonical URLs from {len(sitemap_urls)} sitemap files")
 
-      - name: Commit an updated mirror
+      - name: Commit an updated mirror and freshness status
         run: |
-          if git diff --quiet -- sitemap.txt; then
-            echo "The mirror is already current."
+          if git diff --quiet -- sitemap.txt status.json; then
+            echo "The mirror and status are already current."
             exit 0
           fi
           git config user.name "Neopolis Sitemap Bot"
           git config user.email "actions@users.noreply.github.com"
-          git add sitemap.txt
+          git add sitemap.txt status.json
           git commit -m "Refresh public sitemap"
           git push
+
+      - name: Close an earlier refresh alert
+        if: success()
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          gh issue list --state open --search '"[monitor] Sitemap mirror refresh failed" in:title' --json number --jq '.[].number' |
+            xargs -r -n1 gh issue close --comment "The scheduled sitemap refresh is healthy again."
+
+      - name: Open or update a refresh alert
+        if: failure()
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          issue_number=$(gh issue list --state open --search '"[monitor] Sitemap mirror refresh failed" in:title' --json number --jq '.[0].number // empty')
+          body="The sitemap mirror refresh failed at $(date -u +'%Y-%m-%dT%H:%M:%SZ'). Review run: $GITHUB_SERVER_URL/$GITHUB_REPOSITORY/actions/runs/$GITHUB_RUN_ID"
+          if [ -n "$issue_number" ]; then
+            gh issue comment "$issue_number" --body "$body"
+          else
+            gh issue create --title "[monitor] Sitemap mirror refresh failed" --body "$body"
+          fi
