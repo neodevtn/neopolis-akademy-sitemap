@@ -154,7 +154,7 @@ jobs:
 
       - name: Commit an updated mirror and freshness status
         run: |
-          if git diff --quiet -- sitemap.txt status.json; then
+          if [ -z "$(git status --porcelain -- sitemap.txt status.json)" ]; then
             echo "The mirror and status are already current."
             exit 0
           fi
