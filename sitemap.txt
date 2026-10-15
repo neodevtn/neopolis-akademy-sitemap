@@ -96,8 +96,6 @@ https://akademy.neodev.click/formations-ia/catalogue/gemini-dans-google-drive
 https://akademy.neodev.click/formations-ia/catalogue/gemini-dans-google-drive/gemini-dans-google-drive-gemini-dans-google-drive
 https://akademy.neodev.click/formations-ia/catalogue/claude-101
 https://akademy.neodev.click/formations-ia/catalogue/claude-101/claude-101-claude-101
-https://akademy.neodev.click/formations-ia/catalogue/ia-pour-les-nuls-initiation
-https://akademy.neodev.click/formations-ia/catalogue/ia-pour-les-nuls-initiation/ia-pour-les-nuls-initiation-ia-pour-les-nuls-introduction-complete
 https://akademy.neodev.click/formations-ia/catalogue/l-ia-pour-les-ventes
 https://akademy.neodev.click/formations-ia/catalogue/l-ia-pour-les-ventes/l-ia-pour-les-ventes-l-ia-pour-les-ventes
 https://akademy.neodev.click/formations-ia/catalogue/l-ia-pour-les-ressources-humaines
@@ -106,6 +104,8 @@ https://akademy.neodev.click/formations-ia/catalogue/innover-avec-google-cloud-a
 https://akademy.neodev.click/formations-ia/catalogue/innover-avec-google-cloud-ai/innover-avec-google-cloud-ai-innover-avec-google-cloud-ai
 https://akademy.neodev.click/formations-ia/catalogue/microsoft-copilot-dans-word
 https://akademy.neodev.click/formations-ia/catalogue/microsoft-copilot-dans-word/microsoft-copilot-dans-word-microsoft-copilot-dans-word
+https://akademy.neodev.click/formations-ia/catalogue/ia-pour-les-nuls-initiation
+https://akademy.neodev.click/formations-ia/catalogue/ia-pour-les-nuls-initiation/ia-pour-les-nuls-initiation-ia-pour-les-nuls-introduction-complete
 https://akademy.neodev.click/formations-ia/catalogue/ia-pour-le-marketing
 https://akademy.neodev.click/formations-ia/catalogue/ia-pour-le-marketing/ia-pour-le-marketing-ia-pour-le-marketing
 https://akademy.neodev.click/formations-ia/catalogue/l-ia-pour-la-finance
@@ -392,8 +392,6 @@ https://akademy.neodev.click/en/ai-training/catalogue/gemini-dans-google-drive
 https://akademy.neodev.click/en/ai-training/catalogue/gemini-dans-google-drive/gemini-dans-google-drive-gemini-dans-google-drive
 https://akademy.neodev.click/en/ai-training/catalogue/claude-101
 https://akademy.neodev.click/en/ai-training/catalogue/claude-101/claude-101-claude-101
-https://akademy.neodev.click/en/ai-training/catalogue/ia-pour-les-nuls-initiation
-https://akademy.neodev.click/en/ai-training/catalogue/ia-pour-les-nuls-initiation/ia-pour-les-nuls-initiation-ia-pour-les-nuls-introduction-complete
 https://akademy.neodev.click/en/ai-training/catalogue/l-ia-pour-les-ventes
 https://akademy.neodev.click/en/ai-training/catalogue/l-ia-pour-les-ventes/l-ia-pour-les-ventes-l-ia-pour-les-ventes
 https://akademy.neodev.click/en/ai-training/catalogue/l-ia-pour-les-ressources-humaines
@@ -402,6 +400,8 @@ https://akademy.neodev.click/en/ai-training/catalogue/innover-avec-google-cloud-
 https://akademy.neodev.click/en/ai-training/catalogue/innover-avec-google-cloud-ai/innover-avec-google-cloud-ai-innover-avec-google-cloud-ai
 https://akademy.neodev.click/en/ai-training/catalogue/microsoft-copilot-dans-word
 https://akademy.neodev.click/en/ai-training/catalogue/microsoft-copilot-dans-word/microsoft-copilot-dans-word-microsoft-copilot-dans-word
+https://akademy.neodev.click/en/ai-training/catalogue/ia-pour-les-nuls-initiation
+https://akademy.neodev.click/en/ai-training/catalogue/ia-pour-les-nuls-initiation/ia-pour-les-nuls-initiation-ia-pour-les-nuls-introduction-complete
 https://akademy.neodev.click/en/ai-training/catalogue/ia-pour-le-marketing
 https://akademy.neodev.click/en/ai-training/catalogue/ia-pour-le-marketing/ia-pour-le-marketing-ia-pour-le-marketing
 https://akademy.neodev.click/en/ai-training/catalogue/l-ia-pour-la-finance
@@ -688,8 +688,6 @@ https://akademy.neodev.click/ar/ai-training/catalogue/gemini-dans-google-drive
 https://akademy.neodev.click/ar/ai-training/catalogue/gemini-dans-google-drive/gemini-dans-google-drive-gemini-dans-google-drive
 https://akademy.neodev.click/ar/ai-training/catalogue/claude-101
 https://akademy.neodev.click/ar/ai-training/catalogue/claude-101/claude-101-claude-101
-https://akademy.neodev.click/ar/ai-training/catalogue/ia-pour-les-nuls-initiation
-https://akademy.neodev.click/ar/ai-training/catalogue/ia-pour-les-nuls-initiation/ia-pour-les-nuls-initiation-ia-pour-les-nuls-introduction-complete
 https://akademy.neodev.click/ar/ai-training/catalogue/l-ia-pour-les-ventes
 https://akademy.neodev.click/ar/ai-training/catalogue/l-ia-pour-les-ventes/l-ia-pour-les-ventes-l-ia-pour-les-ventes
 https://akademy.neodev.click/ar/ai-training/catalogue/l-ia-pour-les-ressources-humaines
@@ -698,6 +696,8 @@ https://akademy.neodev.click/ar/ai-training/catalogue/innover-avec-google-cloud-
 https://akademy.neodev.click/ar/ai-training/catalogue/innover-avec-google-cloud-ai/innover-avec-google-cloud-ai-innover-avec-google-cloud-ai
 https://akademy.neodev.click/ar/ai-training/catalogue/microsoft-copilot-dans-word
 https://akademy.neodev.click/ar/ai-training/catalogue/microsoft-copilot-dans-word/microsoft-copilot-dans-word-microsoft-copilot-dans-word
+https://akademy.neodev.click/ar/ai-training/catalogue/ia-pour-les-nuls-initiation
+https://akademy.neodev.click/ar/ai-training/catalogue/ia-pour-les-nuls-initiation/ia-pour-les-nuls-initiation-ia-pour-les-nuls-introduction-complete
 https://akademy.neodev.click/ar/ai-training/catalogue/ia-pour-le-marketing
 https://akademy.neodev.click/ar/ai-training/catalogue/ia-pour-le-marketing/ia-pour-le-marketing-ia-pour-le-marketing
 https://akademy.neodev.click/ar/ai-training/catalogue/l-ia-pour-la-finance
